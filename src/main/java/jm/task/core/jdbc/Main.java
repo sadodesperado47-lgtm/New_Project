@@ -18,10 +18,17 @@ public class Main {
         userDao.saveUser("Name2", "LastName2", (byte) 25);
         userDao.saveUser("Name3", "LastName3", (byte) 31);
         userDao.saveUser("Name4", "LastName4", (byte) 38);
+        try{
+            userDao.removeUserById(1);
+            userDao.getAllUsers();
+            System.out.println(userDao.getAllUsers());
+            userDao.cleanUsersTable();
+            userDao.dropUsersTable();
 
-        userDao.removeUserById(1);
-        userDao.getAllUsers();
-        userDao.cleanUsersTable();
-        userDao.dropUsersTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 }
