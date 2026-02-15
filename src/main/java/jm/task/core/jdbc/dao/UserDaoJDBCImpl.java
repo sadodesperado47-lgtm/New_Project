@@ -23,7 +23,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try(Statement statement = Util.getInstance().getConnect().createStatement()) {
             statement.executeUpdate(sql);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -32,7 +32,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try(Statement statement = Util.getInstance().getConnect().createStatement()) {
             statement.executeUpdate(sql);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -44,7 +44,7 @@ public class UserDaoJDBCImpl implements UserDao {
                     preparedStatement.setByte(3, age);
                     preparedStatement.executeUpdate();
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
     }
 
@@ -54,7 +54,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
     }
@@ -62,7 +62,8 @@ public class UserDaoJDBCImpl implements UserDao {
     public List<User> getAllUsers() throws SQLException {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM users;";
-        try(Statement statement = Util.getInstance().getConnect().createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
+        try(Statement statement = Util.getInstance().getConnect().createStatement();
+            ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
                 User user = new User();
                 user.setId(resultSet.getLong("id"));
@@ -72,7 +73,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 users.add(user);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         }
         return users;
     }
@@ -82,7 +83,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try(Statement statement = Util.getInstance().getConnect().createStatement()) {
             statement.executeUpdate(sql);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Util {
-    private Connection connect;
+    private final Connection connect;
 
     private final String url = "jdbc:mysql://localhost:3306/test_db";
     private final String user = "root";
@@ -20,6 +20,9 @@ public class Util {
         } catch (ClassNotFoundException e) {
             throw  new SQLException(e);
         }
+    }
+
+    public static void getConnection() {
     }
 
     private static  class Holder {
