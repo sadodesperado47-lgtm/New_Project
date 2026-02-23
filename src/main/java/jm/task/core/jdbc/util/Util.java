@@ -1,47 +1,46 @@
 package jm.task.core.jdbc.util;
 
-import com.mysql.cj.jdbc.Driver;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+
+
+
 public class Util {
-    private final Connection connect;
 
-    private final String url = "jdbc:mysql://localhost:3306/test_db";
-    private final String user = "root";
-    private final String password = "root";
+    private static final String URL = "jdbc:mysql://localhost:3306/test_db";
+    private static final String USER = "root";
+    private static final String PASSWORD = "root";
+    private static final SessionFactory SESSION_FACTORY;
 
-    private Util() throws SQLException {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            this.connect = DriverManager.getConnection(url, user, password);
-        } catch (ClassNotFoundException e) {
-            throw  new SQLException(e);
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASSWORD);
+    }
+
+    static {
+        try{
+            Configuration configuration = new Configuration();
+            configuration.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
+            configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/test_db");
+            configuration.setProperty("hibernate.connection.username", "root");
+            configuration.setProperty("hibernate.connection.password", "root");
+            StandardServiceRegistryBuilder ssBuild = new StandardServiceRegistryBuilder()
+                    .applySettings(configuration.getProperties());
+                    SESSION_FACTORY = configuration.buildSessionFactory(ssBuild.build());
+
+        } catch (Exception ex) {
+            throw new ExceptionInInitializerError(ex);
         }
     }
 
-    public static void getConnection() {
+    public static Session getSession() {
+        return SESSION_FACTORY.openSession();
     }
 
-    private static  class Holder {
-        private static final Util INSTANCE;
-        static  {
-            try {
-                INSTANCE = new Util();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-    }
-
-    public static  Util getInstance() {
-        return Holder.INSTANCE;
-    }
-
-    public Connection getConnect() {
-        return connect;
-    }
 }
