@@ -5,11 +5,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import jm.task.core.jdbc.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-
 
 
 public class Util {
@@ -24,7 +24,7 @@ public class Util {
     }
 
     static {
-        try{
+        try {
             Configuration configuration = new Configuration();
             configuration.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
             configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/test_db");
@@ -32,7 +32,8 @@ public class Util {
             configuration.setProperty("hibernate.connection.password", "root");
             StandardServiceRegistryBuilder ssBuild = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties());
-                    SESSION_FACTORY = configuration.buildSessionFactory(ssBuild.build());
+            configuration.addAnnotatedClass(User.class);
+            SESSION_FACTORY = configuration.buildSessionFactory(ssBuild.build());
 
         } catch (Exception ex) {
             throw new ExceptionInInitializerError(ex);
