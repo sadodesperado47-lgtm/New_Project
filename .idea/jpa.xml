@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaPluginProjectSettings" isShowLibraryClassesInOrmView="true" />
+  <component name="PersistenceUnitSettings">
+    <persistence-units>
+      <persistence-unit moduleName="TaskJDBC" name="TaskJDBC" framework="JPA" ormUnit="TaskJDBC:TaskJDBC" defaultDataSourceId="123da8bc-0872-4707-bbb6-b269200935da" />
+      <persistence-unit moduleName="TaskJDBC" name="hibernate.cfg.xml" framework="JPA" ormUnit="TaskJDBC:hibernate.cfg.xml" defaultDataSourceId="123da8bc-0872-4707-bbb6-b269200935da">
+        <packages>
+          <package value="jm.task" />
+        </packages>
+      </persistence-unit>
+    </persistence-units>
+  </component>
+</project>
